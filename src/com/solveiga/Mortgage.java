@@ -1,6 +1,7 @@
 package com.solveiga;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Mortgage implements Illustration {
 
@@ -20,7 +21,7 @@ public class Mortgage implements Illustration {
         this.deposit = deposit;
         this.ltv = findLTV();
         this.interestRate = findInterestRate();
-        this.monthlyPayment = calculateMonthlyPayment();
+        this.monthlyPayment = calculateMonthlyPayment();  //can a constructor call a method, so it kicks off immediately?
     }
 
     private double findLTV() {
@@ -29,9 +30,9 @@ public class Mortgage implements Illustration {
     }
 
     private double findInterestRate() {
-         if (ltv < 50) return this.interestRate = 5.00;
-         if (ltv > 75) return this.interestRate = 3.74;
-         else return this.interestRate = 3.00;
+         if (ltv < 50) return 2.00;
+         if (ltv > 75) return 5.00;
+         else return 3.74;
     }
 
     private double calculateMonthlyPayment() {
@@ -46,15 +47,19 @@ public class Mortgage implements Illustration {
     }
     @Override
     public String generateIllustration() {
-        DecimalFormat LTV = new DecimalFormat("#.##");
+        BigDecimal LTV = new BigDecimal(ltv).setScale(2, RoundingMode.HALF_DOWN);
+
         return person.printPersonalDetails() + "\n\tMortgage Illustration: "
-                +"\nProperty Value: " + propValue
-                +"\nDeposit: " + deposit
+                +"\nProperty Value: £" + propValue
+                +"\nDeposit: £" + deposit
                 +"\nMortgage term: " + term
-                +"\nInterest Rate: " + interestRate
-                +"\nMortgage amount: " + mortgageAmount
-                +"\nLTV: " + LTV.format(ltv) + "%"
-                +"\nMonthly payment: " + monthlyPayment;
+                +"\nInterest Rate: " + interestRate + "%"
+                +"\nMortgage amount: £" + mortgageAmount
+                +"\nLTV: " + LTV + "%"
+                +"\nMonthly payment: £" + monthlyPayment;
 
     }
+
+
+
 }
