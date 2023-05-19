@@ -29,19 +29,12 @@ public class Main {
         Address address = new Address(street, city, postCode);
         person.setAddress(address);
 
-        //Chose Savings Or Mortgage
+        //Chose to create Savings Or Mortgage and print illiustration
         int choice = getChoice(scanner);
 
         chooseAccount(person, choice, scanner);
 
-        //Create Savings Or Mortgage
-
-        //Print Illustration
-
         //Write Illustration into file?
-
-
-
 
     }
 
@@ -51,7 +44,7 @@ public class Main {
                 generateMortgage(person);
                 break;
             case 2:
-              // Savings savings = new Savings();
+                generateSavingsAccount(person);
              break;
             default:
                 System.out.println("Enter valid option!");
@@ -80,5 +73,17 @@ public class Main {
     private static int getChoice(Scanner scanner) {
         System.out.println("Which account would you like to open? \nEnter 1 for mortgage or 2 for savings");
         return scanner.nextInt();
+    }
+
+    private static void generateSavingsAccount(Person person) {
+        Scanner savingsGeneration = new Scanner(System.in);
+
+        System.out.println("How much would you like to deposit today?");
+        double deposit = savingsGeneration.nextInt();
+        System.out.println("How many years is the fixed period for?");
+        int years = savingsGeneration.nextInt();
+
+        Savings savings = new Savings(deposit, years, person);
+        System.out.println(savings.generateIllustration());
     }
 }
